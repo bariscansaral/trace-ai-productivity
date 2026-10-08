@@ -1,0 +1,31 @@
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Sanal Ortamlar (Virtual Environments)
+.venv/
+venv/
+ENV/
+env/
+
+# Jupyter & Notebook Checkpoints
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+catboost_info/
+**/catboost_info/
+
+# IDE ve Editör Konfigürasyonları
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# İşletim Sistemi Dosyaları
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Çıktı ve Log Dosyaları
+*.log
