@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TRACE | AI Destekli Verimlilik Koçu</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0fdf4',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen antialiased flex flex-col justify-between">
+  <!-- Üst Bar -->
+  <header class="border-b border-slate-800 bg-slate-900/60 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="h-8 w-8 rounded-lg bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 font-bold text-lg">T</div>
+        <h1 class="text-xl font-bold tracking-tight text-white">TRACE <span class="text-xs font-normal px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700 ml-2">Client-Side ML</span></h1>
+      </div>
+      <div class="text-xs text-slate-400">Verileriniz %100 tarayıcınızda saklanır</div>
+    </div>
+  </header>
+
+  <!-- Ana İçerik -->
+  <main class="max-w-6xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8 w-full">
+
+    <!-- Sol Sütun: Girdi Formu -->
+    <div class="lg:col-span-5 space-y-6">
+      <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 shadow-xl">
+        <h2 class="text-lg font-semibold text-white mb-1">Günün Kaydı</h2>
+        <p class="text-xs text-slate-400 mb-5">Metrikleri girin, model anında verimliliğinizi puanlasın.</p>
+
+        <form id="metrics-form" class="space-y-4">
+          <!-- Sayısal Girdiler -->
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-medium text-slate-300 mb-1">Çalışma (Saat)</label>
+              <input type="number" step="0.5" min="0" max="24" id="study_hours" required placeholder="Örn: 4.5"
+                class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500" />
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-300 mb-1">Uyku (Saat)</label>
+              <input type="number" step="0.5" min="0" max="24" id="sleep_hours" required placeholder="Örn: 7.0"
+                class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500" />
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-300 mb-1">Telefon / Ekran (Saat)</label>
+              <input type="number" step="0.5" min="0" max="24" id="phone_usage" required placeholder="Örn: 3.5"
+                class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500" />
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-300 mb-1">Derse Katılım (%)</label>
+              <input type="number" min="0" max="100" id="attendance" required placeholder="Örn: 85"
+                class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500" />
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-300 mb-1">Stres (1-10)</label>
+              <input type="number" min="1" max="10" id="stress" required placeholder="Örn: 5"
+                class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500" />
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-300 mb-1">Odak Seviyesi (1-10)</label>
+              <input type="number" min="1" max="10" id="focus" required placeholder="Örn: 7"
+                class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500" />
+            </div>
+          </div>
+
+          <div class="border-t border-slate-800 my-4 pt-4 space-y-3">
+            <div>
+              <label class="block text-xs font-medium text-slate-300 mb-1">Çalıştığın Konu / Ders (Opsiyonel)</label>
+              <input type="text" id="subject" placeholder="Örn: Diferansiyel Denklemler, React, Tarih"
+                class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500" />
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-300 mb-1">Nerede Tıkandın? (Opsiyonel)</label>
+              <textarea id="struggle" rows="2" placeholder="Örn: Formülleri ezberlemekte zorlandım, soru çözümüne geçemedim."
+                class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500 resize-none"></textarea>
+            </div>
+          </div>
+
+          <button type="submit" id="btn-submit"
+            class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-medium py-2.5 rounded-xl transition duration-200 flex items-center justify-center gap-2 shadow-lg shadow-emerald-900/30">
+            <span>Hesapla & Analiz Et</span>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Sağ Sütun: Skor Kartı, AI Tavsiyesi ve Geçmiş Grafiği -->
+    <div class="lg:col-span-7 space-y-6">
+
+      <!-- Sonuç ve LLM Kartı -->
+      <div id="result-card" class="hidden bg-slate-900/80 border border-slate-800 rounded-2xl p-6 shadow-xl transition-all">
+        <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+          <div>
+            <span class="text-xs uppercase tracking-wider text-slate-400 font-medium">Hesaplanan Verimlilik</span>
+            <div class="flex items-baseline gap-2 mt-1">
+              <span id="score-display" class="text-4xl font-extrabold text-white">0</span>
+              <span class="text-slate-400 text-sm">/ 100</span>
+            </div>
+          </div>
+          <span id="score-badge" class="px-3 py-1 text-xs font-semibold rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Durum</span>
+        </div>
+
+        <!-- AI Analizi -->
+        <div class="mt-4">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <h3 class="text-xs font-semibold text-slate-300 uppercase tracking-wider">AI Koç Değerlendirmesi</h3>
+          </div>
+          <div id="ai-loading" class="text-sm text-slate-400 italic">Analiz hazırlanıyor...</div>
+          <div id="ai-content" class="text-sm text-slate-300 space-y-2 whitespace-pre-line hidden"></div>
+        </div>
+      </div>
+
+      <!-- Grafik Kartı -->
+      <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 shadow-xl">
+        <h3 class="text-sm font-semibold text-white mb-4">Verimlilik Trendi (Son Girişler)</h3>
+        <div class="relative h-64 w-full">
+          <canvas id="historyChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="border-t border-slate-800 py-4 text-center text-xs text-slate-500">
+    TRACE • Sıfır Sunucu İstemci Tabanlı Makine Öğrenmesi & LLM Koçu
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
