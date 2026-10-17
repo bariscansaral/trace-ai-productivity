@@ -28,7 +28,7 @@ function calculateProductivityScore(inputs) {
     inputs.phone_usage,
     inputs.attendance,
     inputs.stress,
-    inputs.focus
+    inputs.focus * 10
   ];
 
   // StandardScaler: z = (x - mean) / scale
@@ -119,7 +119,7 @@ async function fetchAICoachFeedback(entry) {
   contentEl.innerText = '';
 
   try {
-    const response = await fetch('/.netlify/functions/coach', {
+    const response = await fetch('/api/coach', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(entry)
