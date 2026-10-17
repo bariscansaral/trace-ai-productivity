@@ -44,7 +44,10 @@
     <!-- Sol Sütun: Girdi Formu -->
     <div class="lg:col-span-5 space-y-6">
       <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 shadow-xl">
-        <h2 class="text-lg font-semibold text-white mb-1">Günün Kaydı</h2>
+        <div class="flex items-center justify-between mb-1">
+          <h2 id="form-title" class="text-lg font-semibold text-white">Günün Kaydı</h2>
+          <button type="button" id="btn-cancel-edit" class="hidden text-xs text-rose-400 hover:text-rose-300 underline">Vazgeç</button>
+        </div>
         <p class="text-xs text-slate-400 mb-5">Metrikleri girin, model anında verimliliğinizi puanlasın.</p>
 
         <form id="metrics-form" class="space-y-4">
@@ -97,13 +100,13 @@
 
           <button type="submit" id="btn-submit"
             class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-medium py-2.5 rounded-xl transition duration-200 flex items-center justify-center gap-2 shadow-lg shadow-emerald-900/30">
-            <span>Hesapla & Analiz Et</span>
+            <span id="btn-submit-text">Hesapla & Analiz Et</span>
           </button>
         </form>
       </div>
     </div>
 
-    <!-- Sağ Sütun: Skor Kartı, AI Tavsiyesi ve Geçmiş Grafiği -->
+    <!-- Sağ Sütun: Skor Kartı, AI Tavsiyesi, Grafik ve CRUD Geçmiş Kayıtlar -->
     <div class="lg:col-span-7 space-y-6">
 
       <!-- Sonuç ve LLM Kartı -->
@@ -137,6 +140,18 @@
           <canvas id="historyChart"></canvas>
         </div>
       </div>
+
+      <!-- Geçmiş Kayıtlar (CRUD: Listeleme, Güncelleme, Silme) -->
+      <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 shadow-xl">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-sm font-semibold text-white uppercase tracking-wider">Geçmiş Kayıt Yönetimi (CRUD)</h3>
+          <span class="text-xs text-slate-400">Düzenle / Sil</span>
+        </div>
+        <div id="history-list" class="space-y-2 max-h-64 overflow-y-auto pr-1">
+          <!-- Kayıtlar dinamik olarak app.js tarafından buraya listelenecek -->
+        </div>
+      </div>
+
     </div>
 
   </main>
