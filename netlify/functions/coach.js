@@ -50,8 +50,8 @@ Aşağıdaki 3 maddeyi kısa, net ve doğrudan öğrenciye hitap eden bir dille 
       body: JSON.stringify({
         contents: [{ parts: [{ text: prompt }] }],
         generationConfig: {
-          maxOutputTokens: 300,
-          temperature: 0.6
+          maxOutputTokens: 1000,
+          temperature: 0.7
         }
       })
     });
