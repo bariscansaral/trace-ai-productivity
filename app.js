@@ -119,7 +119,7 @@ async function fetchAICoachFeedback(entry) {
   contentEl.innerText = '';
 
   try {
-    const response = await fetch('/.netlify/functions/coach', { {
+    const response = await fetch('/.netlify/functions/coach', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(entry)
