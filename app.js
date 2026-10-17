@@ -372,16 +372,23 @@ async function fetchAICoachFeedback(entry) {
     contentEl.textContent = data.feedback;
     console.log("TRACE: AI koç analizi başarıyla alındı.");
 
-  } catch (error) {
+} catch (error) {
     console.error("TRACE AI koç hatası:", error);
 
-    const messages = [`Verimlilik skorun: ${entry.score}/100.`];
-    if (entry.phone_usage > 4) messages.push("Telefon kullanımını azaltmak için çalışma sırasında telefonu başka bir odada tut.");
-    if (entry.sleep_hours < 6.5) messages.push("Uyku süren düşük. Yarın uyku süreni artırmayı hedefle.");
-    if (entry.stress >= 7) messages.push("Stres seviyen yüksek. Çalışmayı kısa bloklara böl.");
-    if (entry.focus <= 4) messages.push("Odak seviyeni artırmak için Pomodoro tekniği uygula.");
+    // Hata durumuna göre uyarı başlığı belirle
+    const isRateLimit = error.message && (error.message.includes("429") || error.message.includes("quota"));
+    const alertHeader = isRateLimit
+      ? "⚠️ Günlük AI API kotası aşıldı. Kural tabanlı yerel analiz devreye girdi:\n\n"
+      : "ℹ️ AI servisine ulaşılamadı. Kural tabanlı yerel analiz devreye girdi:\n\n";
 
-    contentEl.textContent = messages.join(" ");
+    const messages = [`Skorun: ${entry.score}/100.`];
+    if (entry.phone_usage > 4) messages.push("Telefon kullanım süren verimini düşürüyor, çalışma anında cihazı uzaklaştır.");
+    if (entry.sleep_hours < 6.5) messages.push("Yetersiz uyku odak kapasiteni kısıtlamış, bu gece toparlamaya öncelik ver.");
+    if (entry.stress >= 7) messages.push("Stres seviyen yüksek, çalışma seanslarını daha küçük bloklara böl.");
+    if (entry.focus <= 4) messages.push("Odaklanma düşüklüğü için 25+5 Pomodoro döngüsünü dene.");
+    if (entry.study_hours >= 4) messages.push("Çalışma süren gayet tatmin edici, disiplinini koru.");
+
+    contentEl.textContent = alertHeader + messages.join(" ");
   } finally {
     loadingEl.classList.add("hidden");
     contentEl.classList.remove("hidden");

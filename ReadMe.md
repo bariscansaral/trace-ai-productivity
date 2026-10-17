@@ -1,8 +1,15 @@
-# TRACE: AI-Powered Behavioral Productivity & Personal Prediction Platform
+# TRACE - AI Destekli Verimlilik Takip & Koçluk Platformu
 
-[![Live Demo](https://img.shields.io/badge/demo-online-brightgreen.svg)](https://trace-ai.netlify.app)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
-[![JavaScript](https://img.shields.io/badge/JavaScript-Vanilla%20ES6%2B-F7DF1E.svg)](https://developer.mozilla.org/)
+TRACE, öğrencilerin günlük akademik ve odaklanma metriklerini tarayıcı üzerinde çalışan istemci tabanlı makine öğrenmesi modeliyle (Linear Regression) puanlayan, LocalStorage üzerinde CRUD işlemlerine olanak tanıyan ve Gemini API destekli Netlify Serverless Function ile kişiselleştirilmiş koçluk sunan bir web uygulamasıdır.
 
-TRACE, öğrencilerin ve bireylerin günlük yaşam alışkanlıklarını (uyku süresi, çalışma saati, dijital dikkat dağıtıcılar, stres ve odaklanma dinamikleri) takip ederek verimlilik seviyelerini tahmin eden, senaryo simülasyonları sunan ve tarayıcı üzerinde kişiselleşen yapay zekâ destekli bir davranış analitiği platformudur.
+## 🚀 Canlı Demo
+- **Netlify Canlı Linki:** https://harmonious-conkies-717bdf.netlify.app/
+
+## 📸 Ekran Görüntüsü
+![TRACE Ekran Görüntüsü](screenshot.png)
+
+## 🛠 Kullanılan Teknolojiler & Özellikler
+- **Frontend & Tasarım:** HTML5, Modern JavaScript (ES6+), Tailwind CSS, Chart.js
+- **Veri Saklama (CRUD):** LocalStorage (Kayıt Ekleme, Listeleme, Güncelleme, Silme)
+- **Makine Öğrenmesi (Client-Side ML):** Scikit-learn Linear Regression katsayıları ile tarayıcıda anlık verimlilik tahmini
+- **Yapay Zeka (Serverless):** Netlify Functions & Google Gemini Flash API entegrasyonu
