@@ -18,10 +18,10 @@ exports.handler = async (event) => {
       };
     }
 
-    // 1. LLM için bağlamı ve promptu hazırla
+   // 1. LLM için bağlamı ve promptu hazırla
     const prompt = `
 Sen gerçekçi, analitik ve doğrudan sonuca odaklanan bir öğrenci verimlilik koçusun.
-Asla boş motivasyon cümleleri kurma; verilere dayanarak net teşhis koy ve aksiyon ver.
+Asla boş motivasyon cümleleri kurma; verilere dayanarak net teşhis koy ve somut aksiyon ver.
 
 Öğrencinin Bugünkü Verileri:
 - Çalışma Süresi: ${data.study_hours} saat
@@ -35,10 +35,10 @@ Asla boş motivasyon cümleleri kurma; verilere dayanarak net teşhis koy ve aks
 - Zorlanılan / Tıkanılan Nokta: ${data.struggle ? data.struggle : "Belirtilmedi"}
 
 Senden İstenen Çıktı Formatı:
-Aşağıdaki 3 maddeyi kısa, net ve doğrudan öğrenciye hitap eden bir dille yanıtla (toplamda 3-4 cümleyi geçmesin):
-1. **Teşhis:** Verimliliği en çok düşüren (veya yükselten) 1 temel faktörü direkt yüzüne söyle.
-2. **Çalışma Yöntemi:** Eğer çalışılan konu/zorluk belirtilmişse o konuya özel (örneğin Feynman, Pomodoro, aktif hatırlama vb.), belirtilmemişse genel odaklanma için pratik bir teknik öner.
-3. **Yarın İçin Tek Hedef:** Yarın uygulayabileceği tek ve net bir aksiyon ver.
+Aşağıdaki 3 maddeyi oluştur. Her madde kesinlikle 1 veya 2 kısa cümleden oluşsun, asla lafı uzatma ve yanıtı yarım bırakmadan tamamla:
+1. **Teşhis:** Verimliliği en çok düşüren (veya yükselten) 1 temel sebebi direkt yüzüne vur.
+2. **Çalışma Yöntemi:** Zorlanılan konuya özel (Feynman, Pomodoro, aktif hatırlama vb.) tek cümlelik somut bir çalışma tekniği öner.
+3. **Yarın İçin Tek Hedef:** Yarın uygulayabileceği tek, net ve ölçülebilir bir hedef ver.
 `;
 
     // 2. Gemini API çağrısı
@@ -50,7 +50,7 @@ Aşağıdaki 3 maddeyi kısa, net ve doğrudan öğrenciye hitap eden bir dille 
       body: JSON.stringify({
         contents: [{ parts: [{ text: prompt }] }],
         generationConfig: {
-          maxOutputTokens: 1000,
+          maxOutputTokens: 2048,
           temperature: 0.7
         }
       })
